@@ -40,22 +40,26 @@ void trocar_linhas (double *line1, double *line2, int dim) {
 }
 
 double **pivoteamento (double **matrix, int dim) {
-	int i, j, k, test;
-	double w, m, temp;
+	int i, j, k, k1, test, pivot;
+	double m, temp;
 
 	for (k=0; k<dim; k++) {
-		printf("\n\n------------ k = %d ---------------\n", k);
-		test = -1;
+		printf("\n\n\n\n------------ k = %d ---------------\n\n\n\n", k);
 		imprime(matrix,dim);
-		w = matrix[k][k];
-		for (j=k; j<dim; j++) {
-			if (fabs(matrix[j][k]) > w)
-					test = j;
-		}
-		if (test != -1) {
-			trocar_linhas(matrix[k], matrix[test], dim);
-			printf("\nMatriz após troca de linhas %d e %d: \n", k, test);
-			imprime(matrix,dim);
+		for(k1=k; k1<dim-1; k1++) {
+			pivot=k1;
+			for (j=k1+1; j<dim; j++) {
+				printf("\n----j = %d-----\n", j);
+				printf("\nTeste: %lf > %lf?\n", matrix[j][k],pivot);
+				if (fabs(matrix[j][k]) > matrix[pivot][k]) {
+					pivot = j;
+				}
+				if (k1!=pivot) {
+					trocar_linhas(matrix[k], matrix[test], dim);
+					printf("\nTrocou linhas %d e %d: \n", k, test);
+					imprime(matrix,dim);
+				}
+			}
 		}
 		for (i=k+1; i<dim; i++) {
 			m = matrix[i][k]/matrix[k][k];
