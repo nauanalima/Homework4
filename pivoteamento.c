@@ -46,19 +46,16 @@ double **pivoteamento (double **matrix, int dim) {
 	for (k=0; k<dim; k++) {
 		printf("\n\n\n\n------------ k = %d ---------------\n\n\n\n", k);
 		imprime(matrix,dim);
-		for(k1=k; k1<dim-1; k1++) {
-			pivot=k1;
-			for (j=k1+1; j<dim; j++) {
-				printf("\n----j = %d-----\n", j);
-				printf("\nTeste: %lf > %lf?\n", matrix[j][k],pivot);
-				if (fabs(matrix[j][k]) > matrix[pivot][k]) {
-					pivot = j;
-				}
-				if (k1!=pivot) {
-					trocar_linhas(matrix[k], matrix[test], dim);
-					printf("\nTrocou linhas %d e %d: \n", k, test);
-					imprime(matrix,dim);
-				}
+		for (j=k; j<dim; j++) {
+			test = -1;
+			printf("\n----j = %d-----\n", j);
+			if (fabs(matrix[j][k]) > matrix[k][k]) {
+				test = j;
+			}
+			if (test!=-1) {
+				trocar_linhas(matrix[k], matrix[test], dim);
+				printf("\nTrocou linhas %d e %d: \n", k, test);
+				imprime(matrix,dim);
 			}
 		}
 		for (i=k+1; i<dim; i++) {
